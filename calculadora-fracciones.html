@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Fracciones | CalculaYa</title>
+<meta name="description" content="Suma, resta, multiplica y divide fracciones fácilmente.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://xagrru-png.github.io/mi-web/calculadora-fracciones.html">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:#111827;color:#fff;padding:24px;text-align:center}header a{color:#fff;text-decoration:none;font-size:28px;font-weight:800}
+main{max-width:850px;margin:35px auto;padding:0 18px}.card{background:#fff;border-radius:18px;padding:28px;margin-bottom:22px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+h1{margin-top:0;font-size:32px}p{line-height:1.65;color:#4b5563}label{display:block;font-weight:700;margin:16px 0 7px}
+input{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px;font-size:16px}
+button{width:100%;margin-top:18px;padding:14px;border:0;border-radius:10px;background:#2563eb;color:#fff;font-size:16px;font-weight:700;cursor:pointer}
+.result{display:none;margin-top:18px;padding:18px;border-radius:12px;background:#eef6ff;font-size:18px;font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}footer{text-align:center;padding:30px;color:#6b7280}
+@media(max-width:600px){h1{font-size:27px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><a href="index.html">CalculaYa</a></header>
+<main>
+<section class="card">
+<h1>Calculadora de Fracciones</h1>
+<p>Suma, resta, multiplica y divide fracciones fácilmente.</p>
+<div class="grid"><div><label>Numerador 1</label><input id="a" type="number"><label>Denominador 1</label><input id="b" type="number"></div><div><label>Numerador 2</label><input id="c" type="number"><label>Denominador 2</label><input id="d" type="number"></div></div><button onclick="go()">Sumar fracciones</button><div class="result" id="r"></div>
+</section>
+<section class="card">
+<h2>¿Para qué sirve esta calculadora?</h2>
+<p>Suma, resta, multiplica y divide fracciones fácilmente. Esta herramienta está pensada para obtener resultados rápidamente desde el móvil o el ordenador, sin instalar ninguna aplicación.</p>
+<h2>Calcula online gratis</h2>
+<p>Introduce los datos y pulsa el botón para obtener el resultado. Los cálculos se realizan directamente en tu navegador.</p>
+</section>
+</main>
+<footer>© 2026 CalculaYa · Calculadoras online gratis</footer>
+<script>function go(){let a=+document.getElementById("a").value,b=+document.getElementById("b").value,c=+document.getElementById("c").value,d=+document.getElementById("d").value;if(!b||!d)return r("Los denominadores no pueden ser 0.");let n=a*d+c*b,z=b*d,g=(x,y)=>{while(y){let t=x%y;x=y;y=t}return Math.abs(x)};let q=g(n,z);r("Resultado: "+(n/q)+"/"+(z/q));}function r(x){let e=document.getElementById("r");e.textContent=x;e.style.display="block"}</script>
+</body>
+</html>
