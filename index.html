@@ -1,1 +1,258 @@
-Mi web
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CalculaYa | Calculadoras online gratis</title>
+<meta name="description" content="CalculaYa ofrece calculadoras online gratis para edad, fechas, horas trabajadas, notas, porcentajes, descuentos, IVA, gasolina y mucho más.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://xagrru-png.github.io/">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f5f7fb;color:#172033}
+header{background:linear-gradient(135deg,#111827,#2563eb);color:#fff;padding:28px 18px 55px}
+.container{max-width:1100px;margin:auto}
+nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:55px}
+.logo{font-size:25px;font-weight:800}
+nav span{font-size:13px;opacity:.8}
+.hero{text-align:center}
+.hero h1{font-size:clamp(36px,6vw,58px);margin:0 0 15px}
+.hero p{max-width:720px;margin:auto;color:#dbeafe;font-size:18px}
+.search{max-width:650px;margin:28px auto 0}
+.search input{width:100%;padding:17px 20px;border:0;border-radius:14px;font-size:16px;outline:none}
+main{padding:35px 18px 70px}
+.title{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.title h2{margin:0;font-size:28px}
+.title small{color:#64748b}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:21px;box-shadow:0 5px 20px rgba(15,23,42,.05)}
+.icon{font-size:30px}
+.card h3{margin:9px 0 6px;font-size:18px}
+.card p{color:#64748b;font-size:14px;min-height:42px}
+button{border:0;border-radius:10px;background:#2563eb;color:#fff;font-weight:700;padding:12px 16px;cursor:pointer}
+button:hover{background:#1d4ed8}
+.calculator{display:none;background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:25px;margin:30px 0}
+.calculator.show{display:block}
+.calculator h2{margin-top:0}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+label{display:block;font-size:13px;font-weight:bold;margin-bottom:6px}
+input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px}
+.actions{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+.result{margin-top:18px;padding:18px;background:#eff6ff;border-radius:13px;font-size:20px;font-weight:700}
+.content{background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:28px;margin-top:30px}
+.content h2{margin-top:0}
+.content h3{margin-top:25px}
+.content p{color:#536174}
+footer{text-align:center;padding:30px 18px;color:#64748b;border-top:1px solid #e5e7eb;font-size:13px}
+.hidden{display:none}
+@media(max-width:600px){nav{margin-bottom:38px}.title{align-items:flex-start;gap:8px;flex-direction:column}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="container">
+<nav>
+<div class="logo">CalculaYa</div>
+<span>Gratis · rápido · sin registro</span>
+</nav>
+<div class="hero">
+<h1>Calculadoras online gratis</h1>
+<p>Calcula edad, fechas, horas, notas, porcentajes, descuentos, IVA, gasolina y mucho más desde cualquier dispositivo.</p>
+<div class="search">
+<input id="search" type="search" placeholder="🔎 Buscar una calculadora..." oninput="buscar()">
+</div>
+</div>
+</div>
+</header>
+
+<main class="container">
+<div class="title">
+<h2>Calculadoras</h2>
+<small id="total"></small>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<section id="calculator" class="calculator">
+<h2 id="calcTitle"></h2>
+<p id="calcDescription"></p>
+<div id="calcContent"></div>
+</section>
+
+<section class="content">
+<h2>Calculadoras fáciles para el día a día</h2>
+<p>CalculaYa reúne herramientas gratuitas para realizar cálculos habituales de forma rápida. Puedes utilizarlas desde el móvil, tablet u ordenador y no necesitas registrarte.</p>
+
+<h3>¿Qué puedes calcular?</h3>
+<p>Puedes calcular tu edad exacta, días entre fechas, horas trabajadas, medias de notas, descuentos, porcentajes, precio por kilo, precio por litro, consumo de gasolina, sueldo por hora, propinas, IVA, medias, reglas de tres y costes de viajes.</p>
+
+<h3>Sin registro</h3>
+<p>Las herramientas están diseñadas para funcionar directamente en el navegador. No necesitas crear una cuenta para realizar tus cálculos.</p>
+
+<h3>Calculadoras gratuitas</h3>
+<p>Nuestro objetivo es crear una colección amplia de calculadoras sencillas que solucionen pequeñas dudas del día a día.</p>
+</section>
+</main>
+
+<footer>© 2026 CalculaYa · Calculadoras online gratuitas</footer>
+
+<script>
+const apps=[
+{id:"edad",icon:"🎂",name:"Calculadora de edad",desc:"Calcula tu edad exacta en años, meses y días."},
+{id:"fechas",icon:"📅",name:"Días entre fechas",desc:"Calcula cuántos días hay entre dos fechas."},
+{id:"horas",icon:"⏱️",name:"Horas trabajadas",desc:"Calcula el tiempo trabajado descontando descansos."},
+{id:"notas",icon:"🎓",name:"Calculadora de notas",desc:"Calcula la media de tus notas."},
+{id:"descuento",icon:"🏷️",name:"Calculadora de descuentos",desc:"Descubre el precio final después de un descuento."},
+{id:"porcentaje",icon:"％",name:"Calculadora de porcentaje",desc:"Calcula rápidamente cualquier porcentaje."},
+{id:"kilo",icon:"⚖️",name:"Precio por kilo",desc:"Compara productos calculando su precio por kilogramo."},
+{id:"litro",icon:"🧴",name:"Precio por litro",desc:"Calcula el precio equivalente por litro."},
+{id:"gasolina",icon:"⛽",name:"Consumo de gasolina",desc:"Calcula litros y coste de combustible de un viaje."},
+{id:"hora",icon:"💶",name:"Sueldo por hora",desc:"Calcula aproximadamente cuánto ganas por hora."},
+{id:"propina",icon:"🍽️",name:"Calculadora de propinas",desc:"Calcula propina y total de una cuenta."},
+{id:"iva",icon:"🧾",name:"Calculadora de IVA",desc:"Añade o elimina IVA de un precio."},
+{id:"media",icon:"📊",name:"Calculadora de media",desc:"Calcula la media de varios números."},
+{id:"regla",icon:"➗",name:"Regla de tres",desc:"Resuelve una regla de tres simple."},
+{id:"viaje",icon:"🚗",name:"Coste de un viaje",desc:"Estima el coste de combustible de un trayecto."},
+{id:"fracciones",icon:"🔢",name:"Calculadora de fracciones",desc:"Suma, resta, multiplica y divide fracciones."}
+];
+
+const grid=document.getElementById("grid");
+grid.innerHTML=apps.map(a=>`
+<article class="card" data-text="${a.name.toLowerCase()} ${a.desc.toLowerCase()}">
+<div class="icon">${a.icon}</div>
+<h3>${a.name}</h3>
+<p>${a.desc}</p>
+<button onclick="abrir('${a.id}')">Calcular</button>
+</article>`).join("");
+document.getElementById("total").textContent=apps.length+" herramientas";
+
+function buscar(){
+let q=document.getElementById("search").value.toLowerCase();
+document.querySelectorAll(".card").forEach(c=>c.classList.toggle("hidden",!c.dataset.text.includes(q)));
+}
+
+function abrir(id){
+let a=apps.find(x=>x.id===id);
+document.getElementById("calculator").classList.add("show");
+document.getElementById("calcTitle").textContent=a.icon+" "+a.name;
+document.getElementById("calcDescription").textContent=a.desc;
+let c=document.getElementById("calcContent");
+
+if(id==="edad") c.innerHTML=`
+<div class="fields"><div><label>Fecha de nacimiento</label><input id="nacimiento" type="date"></div><div><label>Fecha de referencia</label><input id="referencia" type="date"></div></div>
+<div class="actions"><button onclick="calcularEdad()">Calcular edad</button></div><div id="resultado" class="result">Introduce tus fechas.</div>`;
+
+if(id==="fechas") c.innerHTML=`
+<div class="fields"><div><label>Fecha inicial</label><input id="fecha1" type="date"></div><div><label>Fecha final</label><input id="fecha2" type="date"></div></div>
+<div class="actions"><button onclick="calcularFechas()">Calcular días</button></div><div id="resultado" class="result">Introduce las fechas.</div>`;
+
+if(id==="horas") c.innerHTML=`
+<div class="fields"><div><label>Hora de entrada</label><input id="entrada" type="time"></div><div><label>Hora de salida</label><input id="salida" type="time"></div><div><label>Descanso (minutos)</label><input id="descanso" type="number" value="0"></div></div>
+<div class="actions"><button onclick="calcularHoras()">Calcular</button></div><div id="resultado" class="result">Introduce las horas.</div>`;
+
+if(id==="notas") c.innerHTML=`
+<div><label>Notas separadas por comas</label><input id="notasInput" placeholder="7, 8.5, 6, 9"></div>
+<div class="actions"><button onclick="calcularNotas()">Calcular media</button></div><div id="resultado" class="result">Introduce tus notas.</div>`;
+
+if(id==="descuento") c.innerHTML=`
+<div class="fields"><div><label>Precio (€)</label><input id="precio" type="number" step="0.01"></div><div><label>Descuento (%)</label><input id="porc" type="number" step="0.01"></div></div>
+<div class="actions"><button onclick="calcularDescuento()">Calcular precio</button></div><div id="resultado" class="result">Introduce los datos.</div>`;
+
+if(id==="porcentaje") c.innerHTML=`
+<div class="fields"><div><label>Porcentaje (%)</label><input id="porcentaje" type="number" step="0.01"></div><div><label>Número</label><input id="numero" type="number" step="0.01"></div></div>
+<div class="actions"><button onclick="calcularPorcentaje()">Calcular</button></div><div id="resultado" class="result">Introduce los datos.</div>`;
+
+if(id==="kilo") c.innerHTML=`
+<div class="fields"><div><label>Precio (€)</label><input id="pk" type="number" step="0.01"></div><div><label>Peso (kg)</label><input id="kg" type="number" step="0.001"></div></div>
+<div class="actions"><button onclick="calcularKilo()">Calcular precio/kg</button></div><div id="resultado" class="result">Introduce los datos.</div>`;
+
+if(id==="litro") c.innerHTML=`
+<div class="fields"><div><label>Precio (€)</label><input id="pl" type="number" step="0.01"></div><div><label>Litros</label><input id="litros" type="number" step="0.001"></div></div>
+<div class="actions"><button onclick="calcularLitro()">Calcular precio/litro</button></div><div id="resultado" class="result">Introduce los datos.</div>`;
+
+if(id==="gasolina") c.innerHTML=`
+<div class="fields"><div><label>Distancia (km)</label><input id="dist" type="number" step="0.1"></div><div><label>Consumo (L/100 km)</label><input id="cons" type="number" step="0.1"></div><div><label>Precio combustible (€/L)</label><input id="comb" type="number" step="0.001"></div></div>
+<div class="actions"><button onclick="calcularGasolina()">Calcular viaje</button></div><div id="resultado" class="result">Introduce los datos.</div>`;
+
+if(id==="hora") c.innerHTML=`
+<div class="fields"><div><label>Sueldo mensual (€)</label><input id="sueldo" type="number" step="0.01"></div><div><label>Horas semanales</label><input id="semanales" type="number" step="0.1"></div></div>
+<div class="actions"><button onclick="calcularHora()">Calcular</button></div><div id="resultado" class="result">Introduce los datos.</div>`;
+
+if(id==="propina") c.innerHTML=`
+<div class="fields"><div><label>Cuenta (€)</label><input id="cuenta" type="number" step="0.01"></div><div><label>Propina (%)</label><input id="prop" type="number" value="10" step="0.5"></div><div><label>Personas</label><input id="personas" type="number" value="1" min="1"></div></div>
+<div class="actions"><button onclick="calcularPropina()">Calcular</button></div><div id="resultado" class="result">Introduce los datos.</div>`;
+
+if(id==="iva") c.innerHTML=`
+<div class="fields"><div><label>Precio (€)</label><input id="ivaPrecio" type="number" step="0.01"></div><div><label>IVA (%)</label><input id="ivaPorc" type="number" value="21" step="0.1"></div></div>
+<div class="actions"><button onclick="calcularIVA(true)">Añadir IVA</button><button onclick="calcularIVA(false)">Quitar IVA</button></div><div id="resultado" class="result">Introduce los datos.</div>`;
+
+if(id==="media") c.innerHTML=`
+<div><label>Números separados por comas</label><input id="mediaInput" placeholder="10, 8, 7.5, 9"></div>
+<div class="actions"><button onclick="calcularMedia()">Calcular media</button></div><div id="resultado" class="result">Introduce los números.</div>`;
+
+if(id==="regla") c.innerHTML=`
+<div class="fields"><div><label>A</label><input id="ra" type="number" step="0.01"></div><div><label>B</label><input id="rb" type="number" step="0.01"></div><div><label>C</label><input id="rc" type="number" step="0.01"></div></div>
+<div class="actions"><button onclick="reglaTres()">Calcular X</button></div><div id="resultado" class="result">A : B = C : X</div>`;
+
+if(id==="viaje") c.innerHTML=`
+<div class="fields"><div><label>Distancia total (km)</label><input id="vd" type="number" step="0.1"></div><div><label>Consumo (L/100 km)</label><input id="vc" type="number" step="0.1"></div><div><label>Precio combustible (€/L)</label><input id="vp" type="number" step="0.001"></div></div>
+<div class="actions"><button onclick="viaje()">Calcular coste</button></div><div id="resultado" class="result">Introduce los datos.</div>`;
+
+if(id==="fracciones") c.innerHTML=`
+<div class="fields"><div><label>Numerador A</label><input id="fa" type="number"></div><div><label>Denominador A</label><input id="fb" type="number"></div><div><label>Numerador B</label><input id="fc" type="number"></div><div><label>Denominador B</label><input id="fd" type="number"></div></div>
+<div class="actions"><button onclick="fracciones('+')">Sumar</button><button onclick="fracciones('-')">Restar</button><button onclick="fracciones('*')">Multiplicar</button><button onclick="fracciones('/')">Dividir</button></div><div id="resultado" class="result">Introduce las fracciones.</div>`;
+
+document.getElementById("calculator").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function num(id){return parseFloat(document.getElementById(id).value)}
+function money(n){return n.toLocaleString("es-ES",{style:"currency",currency:"EUR"})}
+function calcularEdad(){
+let b=new Date(document.getElementById("nacimiento").value+"T12:00:00"),r=new Date(document.getElementById("referencia").value+"T12:00:00");
+if(isNaN(b)||isNaN(r)||b>r){resultado.textContent="Revisa las fechas.";return}
+let y=r.getFullYear()-b.getFullYear(),m=r.getMonth()-b.getMonth(),d=r.getDate()-b.getDate();
+if(d<0){m--;d+=new Date(r.getFullYear(),r.getMonth(),0).getDate()}
+if(m<0){y--;m+=12}
+resultado.textContent=`Tienes ${y} años, ${m} meses y ${d} días.`;
+}
+function calcularFechas(){
+let a=new Date(document.getElementById("fecha1").value),b=new Date(document.getElementById("fecha2").value);
+if(isNaN(a)||isNaN(b)){resultado.textContent="Revisa las fechas.";return}
+resultado.textContent=`Hay ${Math.abs(Math.round((b-a)/86400000)).toLocaleString("es-ES")} días entre las fechas.`;
+}
+function calcularHoras(){
+let a=document.getElementById("entrada").value,b=document.getElementById("salida").value;
+if(!a||!b){resultado.textContent="Introduce las horas.";return}
+let [ah,am]=a.split(":").map(Number),[bh,bm]=b.split(":").map(Number),x=bh*60+bm-(ah*60+am)-num("descanso");
+if(x<0)x+=1440;
+resultado.textContent=`Has trabajado ${Math.floor(x/60)} h ${x%60} min (${(x/60).toFixed(2)} horas).`;
+}
+function lista(id){return document.getElementById(id).value.split(",").map(x=>parseFloat(x.trim())).filter(x=>!isNaN(x))}
+function calcularNotas(){let a=lista("notasInput");resultado.textContent=a.length?`Tu media es ${ (a.reduce((x,y)=>x+y,0)/a.length).toLocaleString("es-ES",{maximumFractionDigits:2})}.`:"Introduce notas válidas."}
+function calcularMedia(){let a=lista("mediaInput");resultado.textContent=a.length?`La media es ${(a.reduce((x,y)=>x+y,0)/a.length).toLocaleString("es-ES",{maximumFractionDigits:2})}.`:"Introduce números válidos."}
+function calcularDescuento(){let p=num("precio"),d=num("porc");if(isNaN(p)||isNaN(d)){resultado.textContent="Revisa los datos.";return}let ahorro=p*d/100;resultado.innerHTML=`Precio final: ${money(p-ahorro)}<br>Ahorras: ${money(ahorro)}`}
+function calcularPorcentaje(){let p=num("porcentaje"),n=num("numero");resultado.textContent=isNaN(p)||isNaN(n)?"Revisa los datos.":`${p}% de ${n} = ${(p*n/100).toLocaleString("es-ES",{maximumFractionDigits:2})}`}
+function calcularKilo(){let p=num("pk"),k=num("kg");resultado.textContent=p>0&&k>0?`${money(p/k)} por kg.`:"Revisa los datos."}
+function calcularLitro(){let p=num("pl"),l=num("litros");resultado.textContent=p>0&&l>0?`${money(p/l)} por litro.`:"Revisa los datos."}
+function calcularGasolina(){let d=num("dist"),c=num("cons"),p=num("comb");if(d<=0||c<=0||p<=0){resultado.textContent="Revisa los datos.";return}let l=d*c/100;resultado.innerHTML=`Necesitas aproximadamente ${l.toFixed(2)} L.<br>Coste: ${money(l*p)}.`}
+function calcularHora(){let s=num("sueldo"),h=num("semanales");resultado.textContent=s>0&&h>0?`Aproximadamente ${money(s/(h*52/12))} por hora.`:"Revisa los datos."}
+function calcularPropina(){let c=num("cuenta"),p=num("prop"),n=num("personas");if(c<0||p<0||n<1){resultado.textContent="Revisa los datos.";return}let pr=c*p/100;resultado.innerHTML=`Propina: ${money(pr)}<br>Total: ${money(c+pr)}<br>Por persona: ${money((c+pr)/n)}`}
+function calcularIVA(add){let p=num("ivaPrecio"),v=num("ivaPorc");if(p<0||v<0){resultado.textContent="Revisa los datos.";return}let total=add?p*(1+v/100):p/(1+v/100);resultado.innerHTML=add?`Precio con IVA: ${money(total)}<br>IVA: ${money(total-p)}`:`Precio sin IVA: ${money(total)}<br>IVA incluido: ${money(p-total)}`}
+function reglaTres(){let a=num("ra"),b=num("rb"),c=num("rc");resultado.textContent=a!==0?`X = ${(b*c/a).toLocaleString("es-ES",{maximumFractionDigits:4})}`:"A no puede ser 0."}
+function viaje(){let d=num("vd"),c=num("vc"),p=num("vp");if(d<=0||c<=0||p<=0){resultado.textContent="Revisa los datos.";return}let l=d*c/100;resultado.innerHTML=`Combustible: ${l.toFixed(2)} L<br>Coste estimado: ${money(l*p)}.`}
+function gcd(a,b){return b?gcd(b,a%b):Math.abs(a)}
+function fracciones(op){
+let a=num("fa"),b=num("fb"),c=num("fc"),d=num("fd");
+if(!b||!d){resultado.textContent="Los denominadores no pueden ser 0.";return}
+let n,den;
+if(op==="+"){n=a*d+c*b;den=b*d}
+if(op==="-"){n=a*d-c*b;den=b*d}
+if(op==="*"){n=a*c;den=b*d}
+if(op==="/"){if(!c){resultado.textContent="No se puede dividir entre 0.";return}n=a*d;den=b*c}
+let g=gcd(n,den);n/=g;den/=g;
+resultado.textContent=`Resultado: ${n}/${den}${den===1?" = "+n:""}`;
+}
+</script>
+</body>
+</html>
