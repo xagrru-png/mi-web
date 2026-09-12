@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Edad | Años, meses, días y horas</title>
+  <meta name="description" content="Calcula tu edad exacta en años, meses, días y horas. Descubre cuánto tiempo has vivido de forma fácil y gratuita con CalculaYa.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xagrru-png.github.io/mi-web/calculadora-edad.html">
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+    header{background:#111827;color:white;padding:24px 18px;text-align:center}
+    header a{color:white;text-decoration:none;font-size:28px;font-weight:800}
+    main{max-width:850px;margin:35px auto;padding:0 18px}
+    .card{background:white;border-radius:18px;padding:28px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+    h1{margin-top:0;font-size:32px}
+    .intro{font-size:17px;line-height:1.6;color:#4b5563}
+    label{display:block;font-weight:700;margin:18px 0 8px}
+    input{width:100%;padding:14px;border:1px solid #d1d5db;border-radius:10px;font-size:16px}
+    button{width:100%;margin-top:22px;padding:15px;border:0;border-radius:10px;background:#2563eb;color:white;font-size:17px;font-weight:700;cursor:pointer}
+    button:hover{background:#1d4ed8}
+    .result{display:none;margin-top:24px;padding:20px;border-radius:12px;background:#eef6ff}
+    .result h2{margin-top:0}
+    .numbers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:15px}
+    .number{background:white;padding:15px;border-radius:10px;text-align:center}
+    .number strong{display:block;font-size:25px;margin-bottom:5px}
+    .error{display:none;color:#b91c1c;margin-top:12px;font-weight:700}
+    .content{margin-top:28px;line-height:1.7}
+    footer{text-align:center;padding:30px;color:#6b7280}
+    @media(max-width:600px){h1{font-size:26px}.numbers{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header><a href="index.html">CalculaYa</a></header>
+
+<main>
+  <section class="card">
+    <h1>Calculadora de Edad</h1>
+    <p class="intro">Introduce tu fecha de nacimiento y calcula tu edad exacta. Además de los años, meses y días, podrás saber aproximadamente cuántos días, horas, minutos y segundos has vivido.</p>
+
+    <label for="birth">Fecha de nacimiento</label>
+    <input type="date" id="birth">
+
+    <label for="today">Calcular hasta</label>
+    <input type="date" id="today">
+
+    <button onclick="calculateAge()">Calcular mi edad</button>
+    <p class="error" id="error"></p>
+
+    <div class="result" id="result">
+      <h2>Tu edad exacta</h2>
+      <div class="numbers">
+        <div class="number"><strong id="years">0</strong>Años</div>
+        <div class="number"><strong id="months">0</strong>Meses</div>
+        <div class="number"><strong id="days">0</strong>Días</div>
+        <div class="number"><strong id="totalDays">0</strong>Días vividos aprox.</div>
+        <div class="number"><strong id="totalHours">0</strong>Horas vividas aprox.</div>
+        <div class="number"><strong id="totalMinutes">0</strong>Minutos vividos aprox.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card content">
+    <h2>¿Cómo calcular la edad?</h2>
+    <p>La edad se calcula comparando la fecha de nacimiento con una fecha de referencia. La calculadora de CalculaYa tiene en cuenta los años y meses del calendario para mostrar una edad en años, meses y días.</p>
+    <h2>¿Cuántos días he vivido?</h2>
+    <p>También calculamos la diferencia total entre las dos fechas en días. Las horas y minutos se muestran como una estimación basada en días de 24 horas.</p>
+    <h2>¿Para qué sirve una calculadora de edad?</h2>
+    <p>Puede servir para conocer la edad exacta de una persona, preparar cumpleaños, comprobar edades para determinados trámites o simplemente descubrir cuánto tiempo ha pasado desde una fecha de nacimiento.</p>
+  </section>
+</main>
+
+<footer>© 2026 CalculaYa · Calculadoras online gratis</footer>
+
+<script>
+  const todayInput = document.getElementById("today");
+  const now = new Date();
+  todayInput.value = now.toISOString().split("T")[0];
+
+  function dateUTC(value){
+    const [y,m,d] = value.split("-").map(Number);
+    return new Date(Date.UTC(y,m-1,d));
+  }
+
+  function calculateAge(){
+    const birthValue = document.getElementById("birth").value;
+    const todayValue = todayInput.value;
+    const error = document.getElementById("error");
+    const result = document.getElementById("result");
+
+    error.style.display = "none";
+    result.style.display = "none";
+
+    if(!birthValue || !todayValue){
+      error.textContent = "Introduce las dos fechas.";
+      error.style.display = "block";
+      return;
+    }
+
+    const birth = dateUTC(birthValue);
+    const end = dateUTC(todayValue);
+
+    if(birth > end){
+      error.textContent = "La fecha de nacimiento no puede ser posterior a la fecha final.";
+      error.style.display = "block";
+      return;
+    }
+
+    let years = end.getUTCFullYear() - birth.getUTCFullYear();
+    let months = end.getUTCMonth() - birth.getUTCMonth();
+    let days = end.getUTCDate() - birth.getUTCDate();
+
+    if(days < 0){
+      months--;
+      const previousMonth = new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), 0));
+      days += previousMonth.getUTCDate();
+    }
+
+    if(months < 0){
+      years--;
+      months += 12;
+    }
+
+    const totalDays = Math.floor((end - birth) / 86400000);
+
+    document.getElementById("years").textContent = years.toLocaleString("es-ES");
+    document.getElementById("months").textContent = months.toLocaleString("es-ES");
+    document.getElementById("days").textContent = days.toLocaleString("es-ES");
+    document.getElementById("totalDays").textContent = totalDays.toLocaleString("es-ES");
+    document.getElementById("totalHours").textContent = (totalDays*24).toLocaleString("es-ES");
+    document.getElementById("totalMinutes").textContent = (totalDays*1440).toLocaleString("es-ES");
+
+    result.style.display = "block";
+  }
+</script>
+</body>
+</html>
