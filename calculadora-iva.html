@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de IVA | Añadir o quitar IVA</title>
+<meta name="description" content="Calcula el IVA de una cantidad fácilmente. Añade o quita IVA, descubre la base imponible y el importe del impuesto con esta calculadora online gratis.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://xagrru-png.github.io/mi-web/calculadora-iva.html">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:#111827;color:#fff;padding:24px 18px;text-align:center}header a{color:#fff;text-decoration:none;font-size:28px;font-weight:800}
+main{max-width:900px;margin:35px auto;padding:0 18px}.card{background:#fff;border-radius:18px;padding:28px;margin-bottom:22px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+h1{margin-top:0;font-size:32px}.intro,.content{line-height:1.65;color:#4b5563}
+label{display:block;font-weight:700;margin:16px 0 7px}input,select{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px;font-size:16px}
+button{width:100%;margin-top:20px;padding:14px;border:0;border-radius:10px;background:#2563eb;color:#fff;font-size:16px;font-weight:700;cursor:pointer}
+.result{display:none;margin-top:18px;padding:20px;border-radius:12px;background:#eef6ff}.result p{margin:9px 0;font-size:17px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.content h2{color:#172033;margin-top:26px}
+@media(max-width:600px){h1{font-size:27px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><a href="index.html">CalculaYa</a></header>
+<main>
+<section class="card">
+<h1>Calculadora de IVA</h1>
+<p class="intro">Calcula cuánto IVA corresponde a un precio, añade el impuesto a una cantidad o quita el IVA de un precio final. Puedes elegir el porcentaje de IVA que necesites.</p>
+
+<div class="grid">
+<div><label for="amount">Cantidad (€)</label><input id="amount" type="number" step="any" placeholder="Ej. 100"></div>
+<div><label for="rate">Tipo de IVA</label>
+<select id="rate"><option value="21">21%</option><option value="10">10%</option><option value="4">4%</option><option value="custom">Otro porcentaje</option></select></div>
+</div>
+<div id="customBox" style="display:none"><label for="customRate">Porcentaje personalizado</label><input id="customRate" type="number" step="any" placeholder="Ej. 15"></div>
+
+<label for="mode">¿Qué quieres calcular?</label>
+<select id="mode">
+<option value="add">Añadir IVA a un precio sin IVA</option>
+<option value="remove">Quitar IVA de un precio con IVA</option>
+</select>
+<button onclick="calculateIVA()">Calcular IVA</button>
+
+<div class="result" id="result">
+<p id="line1"></p><p id="line2"></p><p id="line3"></p>
+</div>
+</section>
+
+<section class="card content">
+<h2>¿Cómo se calcula el IVA?</h2>
+<p>Para añadir IVA a un precio sin impuestos, se calcula primero el importe del IVA y después se suma al precio original. Por ejemplo, con un IVA del 21%, una cantidad de 100 € genera 21 € de IVA y un total de 121 €.</p>
+<h2>¿Cómo quitar el IVA?</h2>
+<p>Cuando un precio ya incluye IVA, no basta con restar el 21%. Para obtener correctamente la base imponible hay que dividir el precio final entre 1 más el tipo de IVA expresado en decimal.</p>
+<h2>¿Qué tipos de IVA se pueden calcular?</h2>
+<p>La calculadora incluye los tipos del 21%, 10% y 4%, además de permitir introducir otro porcentaje. Comprueba siempre el tipo de IVA aplicable a tu producto o servicio.</p>
+</section>
+</main>
+<footer style="text-align:center;padding:30px;color:#6b7280">© 2026 CalculaYa · Calculadoras online gratis</footer>
+<script>
+const rate=document.getElementById("rate"), customBox=document.getElementById("customBox");
+rate.addEventListener("change",()=>customBox.style.display=rate.value==="custom"?"block":"none");
+function fmt(n){return n.toLocaleString("es-ES",{minimumFractionDigits:2,maximumFractionDigits:2})+" €"}
+function calculateIVA(){
+ const amount=parseFloat(document.getElementById("amount").value);
+ const r=rate.value==="custom"?parseFloat(document.getElementById("customRate").value):parseFloat(rate.value);
+ const mode=document.getElementById("mode").value, box=document.getElementById("result");
+ if(isNaN(amount)||amount<0||isNaN(r)||r<0){box.style.display="block";document.getElementById("line1").textContent="Introduce cantidades válidas.";document.getElementById("line2").textContent="";document.getElementById("line3").textContent="";return}
+ let base,iva,total;
+ if(mode==="add"){base=amount;iva=base*r/100;total=base+iva}
+ else{total=amount;base=total/(1+r/100);iva=total-base}
+ document.getElementById("line1").textContent="Base imponible: "+fmt(base);
+ document.getElementById("line2").textContent="IVA ("+fmt(r).replace(" €","%")+"): "+fmt(iva);
+ document.getElementById("line3").textContent="Total: "+fmt(total);
+ box.style.display="block";
+}
+</script>
+</body>
+</html>
