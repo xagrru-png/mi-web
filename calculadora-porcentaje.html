@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Porcentaje | Porcentaje de una cantidad</title>
+  <meta name="description" content="Calcula porcentajes fácilmente: porcentaje de una cantidad, qué porcentaje representa un número, aumentos y descuentos porcentuales. Gratis y online.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xagrru-png.github.io/mi-web/calculadora-porcentaje.html">
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+    header{background:#111827;color:white;padding:24px 18px;text-align:center}
+    header a{color:white;text-decoration:none;font-size:28px;font-weight:800}
+    main{max-width:900px;margin:35px auto;padding:0 18px}
+    .card{background:#fff;border-radius:18px;padding:28px;margin-bottom:22px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+    h1{margin-top:0;font-size:32px}.intro{font-size:17px;line-height:1.6;color:#4b5563}
+    .calc{border-top:1px solid #e5e7eb;padding-top:20px;margin-top:20px}
+    h2{font-size:21px}.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    label{display:block;font-weight:700;margin:10px 0 7px}
+    input{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px;font-size:16px}
+    button{width:100%;margin-top:18px;padding:14px;border:0;border-radius:10px;background:#2563eb;color:white;font-size:16px;font-weight:700;cursor:pointer}
+    .result{margin-top:14px;padding:15px;border-radius:10px;background:#eef6ff;font-size:18px;font-weight:700;display:none}
+    .content{line-height:1.7;color:#374151}.content h2{color:#172033}
+    @media(max-width:600px){h1{font-size:27px}.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header><a href="index.html">CalculaYa</a></header>
+<main>
+<section class="card">
+<h1>Calculadora de Porcentaje</h1>
+<p class="intro">Calcula porcentajes de forma rápida y sencilla. Puedes saber cuánto es un porcentaje de una cantidad, qué porcentaje representa un número de otro y calcular aumentos o reducciones porcentuales.</p>
+
+<div class="calc">
+<h2>¿Cuánto es X% de una cantidad?</h2>
+<div class="row">
+<div><label for="p1">Porcentaje (%)</label><input id="p1" type="number" step="any" placeholder="Ej. 20"></div>
+<div><label for="n1">Cantidad</label><input id="n1" type="number" step="any" placeholder="Ej. 150"></div>
+</div>
+<button onclick="calc1()">Calcular</button>
+<div class="result" id="r1"></div>
+</div>
+
+<div class="calc">
+<h2>¿Qué porcentaje es un número de otro?</h2>
+<div class="row">
+<div><label for="n2">Número</label><input id="n2" type="number" step="any" placeholder="Ej. 30"></div>
+<div><label for="n3">Cantidad total</label><input id="n3" type="number" step="any" placeholder="Ej. 120"></div>
+</div>
+<button onclick="calc2()">Calcular</button>
+<div class="result" id="r2"></div>
+</div>
+
+<div class="calc">
+<h2>Aumentar una cantidad un porcentaje</h2>
+<div class="row">
+<div><label for="n4">Cantidad</label><input id="n4" type="number" step="any" placeholder="Ej. 100"></div>
+<div><label for="p3">Aumento (%)</label><input id="p3" type="number" step="any" placeholder="Ej. 21"></div>
+</div>
+<button onclick="calc3()">Calcular</button>
+<div class="result" id="r3"></div>
+</div>
+
+<div class="calc">
+<h2>Reducir una cantidad un porcentaje</h2>
+<div class="row">
+<div><label for="n5">Cantidad</label><input id="n5" type="number" step="any" placeholder="Ej. 100"></div>
+<div><label for="p4">Descuento (%)</label><input id="p4" type="number" step="any" placeholder="Ej. 20"></div>
+</div>
+<button onclick="calc4()">Calcular</button>
+<div class="result" id="r4"></div>
+</div>
+</section>
+
+<section class="card content">
+<h2>¿Cómo se calcula un porcentaje?</h2>
+<p>Para calcular un porcentaje de una cantidad, multiplica la cantidad por el porcentaje y divide el resultado entre 100. Por ejemplo, el 20% de 150 es 30.</p>
+<h2>¿Cómo calcular qué porcentaje representa un número?</h2>
+<p>Divide el número entre la cantidad total y multiplica por 100. Por ejemplo, 30 de 120 representa el 25%.</p>
+<h2>Porcentajes, aumentos y descuentos</h2>
+<p>Los porcentajes se utilizan a diario para calcular descuentos, subidas de precios, impuestos, propinas, notas y muchos otros valores. Esta calculadora reúne las operaciones porcentuales más habituales en una sola página.</p>
+</section>
+</main>
+<footer style="text-align:center;padding:30px;color:#6b7280">© 2026 CalculaYa · Calculadoras online gratis</footer>
+<script>
+function num(id){return parseFloat(document.getElementById(id).value)}
+function show(id,text){const e=document.getElementById(id);e.textContent=text;e.style.display="block"}
+function fmt(x){return x.toLocaleString("es-ES",{maximumFractionDigits:2})}
+function calc1(){let p=num("p1"),n=num("n1");if(isNaN(p)||isNaN(n))return show("r1","Introduce los dos valores.");show("r1",fmt(p)+"% de "+fmt(n)+" = "+fmt(p*n/100))}
+function calc2(){let n=num("n2"),t=num("n3");if(isNaN(n)||isNaN(t)||t===0)return show("r2","Introduce valores válidos.");show("r2",fmt(n)+" representa el "+fmt(n/t*100)+"% de "+fmt(t))}
+function calc3(){let n=num("n4"),p=num("p3");if(isNaN(n)||isNaN(p))return show("r3","Introduce los dos valores.");show("r3","Resultado: "+fmt(n*(1+p/100))+" (aumento de "+fmt(n*p/100)+")")}
+function calc4(){let n=num("n5"),p=num("p4");if(isNaN(n)||isNaN(p))return show("r4","Introduce los dos valores.");show("r4","Resultado: "+fmt(n*(1-p/100))+" (descuento de "+fmt(n*p/100)+")")}
+</script>
+</body>
+</html>
